@@ -1,3 +1,4 @@
+import playground
 from direction import Direction
 
 
@@ -22,6 +23,9 @@ class Snake:
             Snake.position_y -= Snake.speed
         elif Snake.direction == Direction.DOWN:
             Snake.position_y += Snake.speed
+
+        Snake.position_x = Snake.position_x % playground.WIDTH
+        Snake.position_y = Snake.position_y % playground.HEIGHT
 
     @staticmethod
     def get_rect():

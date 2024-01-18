@@ -1,10 +1,10 @@
 import pygame
-from pygame import Surface, SurfaceType
 from pygame.event import Event
 from pygame.time import Clock
 
 from color import Color
 from direction import Direction
+from playground import playground
 from snake import Snake
 
 clock = Clock()
@@ -24,14 +24,14 @@ def event_handling(event: Event):
             Snake.direction = Direction.DOWN
 
 
-def tick(display: Surface | SurfaceType):
+def tick():
     for event in pygame.event.get():
         event_handling(event)
 
     Snake.go()
 
-    display.fill(Color.WHITE)
-    pygame.draw.rect(display, Color.BLACK, Snake.get_rect())
+    playground.fill(Color.WHITE)
+    pygame.draw.rect(playground, Color.BLACK, Snake.get_rect())
     pygame.display.update()
 
     clock.tick(30)
