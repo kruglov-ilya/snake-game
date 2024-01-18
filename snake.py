@@ -7,6 +7,8 @@ class Snake:
     position_y: int = 100
     direction: int = Direction.NONE
 
+    body: list[tuple[int, int]] = [(position_x, position_y), (position_x, position_y)]
+
     speed = 10
 
     @staticmethod
@@ -14,7 +16,7 @@ class Snake:
         Snake.direction = direction
 
     @staticmethod
-    def go():
+    def go(growth=False):
         if Snake.direction == Direction.LEFT:
             Snake.position_x -= Snake.speed
         elif Snake.direction == Direction.RIGHT:
@@ -27,6 +29,10 @@ class Snake:
         Snake.position_x = Snake.position_x % playground.WIDTH
         Snake.position_y = Snake.position_y % playground.HEIGHT
 
+        if not growth:
+            Snake.body.pop(0)
+        Snake.body.append((Snake.position_x, Snake.position_y))
+
     @staticmethod
-    def get_rect():
-        return [Snake.position_x, Snake.position_y, 10, 10]
+    def get_rects():
+        return [list(part) + [Snake.speed] * 2 for part in Snake.body]

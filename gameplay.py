@@ -6,6 +6,7 @@ from color import Color
 from direction import Direction
 from playground import playground
 from snake import Snake
+from treat import Treat
 
 clock = Clock()
 
@@ -28,10 +29,18 @@ def tick():
     for event in pygame.event.get():
         event_handling(event)
 
-    Snake.go()
+    if Treat.eaten_by_snake():
+        Snake.go(growth=True)
+        Treat.move()
+    else:
+        Snake.go()
 
     playground.fill(Color.WHITE)
-    pygame.draw.rect(playground, Color.BLACK, Snake.get_rect())
+
+    pygame.draw.rect(playground, Color.BLUE, Treat.get_rect())
+    for rect in Snake.get_rects():
+        pygame.draw.rect(playground, Color.BLACK, rect)
+
     pygame.display.update()
 
-    clock.tick(30)
+    clock.tick(10)
